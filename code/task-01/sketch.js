@@ -7,7 +7,7 @@ var dia = 2;
 function setup() {
   createCanvas(max, max);
   background(0);
-
+  frameRate(100);
 };
 
 function draw() {
