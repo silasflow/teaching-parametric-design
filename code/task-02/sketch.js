@@ -9,7 +9,7 @@ function setup() {
 function draw() {
   noLoop();
   let distance = 115;
-  let rectSize = 50;
+  let rectSize = 60;
   stroke(0);
   noFill();
 
@@ -18,7 +18,7 @@ function draw() {
       let rNumber = random(0, 5);
 
       if (rNumber >= 4) {
-        swirl(55 + distance * x, 55 + distance * y, 50);
+        swirl(55 + distance * x, 55 + distance * y, 100);
       } else {
         if (x % 2 === 0) {
           rect(30 + distance * x, 30 + distance * y, rectSize);
@@ -38,11 +38,11 @@ function draw() {
 
 function swirl(xS, yS, circleR) {
   noFill();
-  circle(xS, yS, circleR);
-  for (let i = 0; i <= 50; i++) {
+  circle(xS, yS, circleR*0.8);
+  for (let i = 0; i <= 70; i++) {
     circle(
-      xS + random(-circleR / 3, circleR / 3),
-      yS + random(-circleR / 3, circleR / 3),
+      xS + random(random(-circleR / 6, -circleR / 3), random(circleR / 6, circleR / 3)),
+      yS + random(random(-circleR / 6, -circleR / 3), random(circleR / 6, circleR / 3)),
       circleR / 4);
   }
 }
