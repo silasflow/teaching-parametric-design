@@ -7,7 +7,7 @@ var dia = 2;
 function setup() {
   createCanvas(max, max);
   background(0);
-  frameRate(100);
+  frameRate(10);
 };
 
 function draw() {
@@ -25,9 +25,7 @@ function dots() {
   point(x, y);
   if (x <= max) {
     x++;
-  };
-
-  if (x == max && y != max) {
+  } else if (x === max && y != max) {
     x = 1;
     y++;
   };
@@ -43,6 +41,6 @@ function maze() {
   noFill();
   stroke(255);
   arc(mouseX, mouseY, dia, dia, Math.PI / 180 * random(120, 350), Math.PI / 180 * random(120, 350));
-  dia = dia + 5;
+  dia = dia + 5
   // };
 };
