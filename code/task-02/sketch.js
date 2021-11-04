@@ -3,7 +3,7 @@ const max = 400;
 function setup() {
   createCanvas(max, max);
   background(255);
-  frameRate(0.25);
+  frameRate(0.5);
 };
 
 function draw() {
@@ -16,20 +16,21 @@ function draw() {
   for (let x = 0; 100 + x * 100 <= max; x++) {
     for (let y = 0; 100 + y * 100 <= max; y++) {
       let rNumber = random(0, 5);
+      let rOffset = random(-5,5);
 
       if (rNumber >= 4) {
         swirl(55 + distance * x, 55 + distance * y, 120);
       } else {
         if (x % 2 === 0) {
-          rect(30 + distance * x, 30 + distance * y, rectSize);
+          rect(30 + distance * x + rOffset, 30 + distance * y + rOffset, rectSize);
         } else {
           triangle(
-            30 + (rectSize / 2) + distance * x,
-            30 + distance * y,
-            30 + distance * x,
-            30 + rectSize + distance * y,
-            30 + rectSize + distance * x,
-            30 + rectSize + distance * y, )
+            30 + (rectSize / 2) + distance * x + rOffset,
+            30 + distance * y + rOffset,
+            30 + distance * x + rOffset,
+            30 + rectSize + distance * y + rOffset,
+            30 + rectSize + distance * x + rOffset,
+            30 + rectSize + distance * y + rOffset, )
         };
       };
     };
