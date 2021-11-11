@@ -1,7 +1,6 @@
 const max = 400,
   dotCount = 50;
-var dot = [],
-  radius = 10,
+var radius = 10,
   degree = 0;
 
 function setup() {
@@ -11,6 +10,23 @@ function setup() {
   angleMode(DEGREES);
   rectMode(CENTER);
 
+
+};
+
+function draw() {
+  background(0);
+  whatTheRadius()
+  var x = radius * cos(degree);
+  var y = radius * sin(degree);
+  degree++;
+
+  if (whatTheRadius()) {
+    radius--;
+  } else {
+    radius++;
+  }
+
+  var dot = [];
   for (let i = 0; i <= dotCount; i++) {
     dot.push({
       x: random(0, max),
@@ -18,22 +34,6 @@ function setup() {
     })
 
   }
-
-};
-
-function draw() {
-  background(0);
-
-  var x = radius * cos(degree);
-  var y = radius * sin(degree);
-  degree++;
-
-  if (whatTheRadius() === true) {
-    radius--;
-  } else if (whatTheRadius() === false) {
-    radius++;
-  }
-
 
 
   for (let i = 0; i <= dotCount; i++) {
@@ -43,13 +43,10 @@ function draw() {
 
     beginShape();
     vertex(dot[i].x, dot[i].y);
-    vertex(200 + x, 200 + y);
+    vertex(max / 2 + x, max / 2 + y);
     endShape();
   }
 
-  // fill("black");
-  // circle(200, 200, radius * 2);
-  // circle(200 + x, 200 + y, 10);
 };
 
 
