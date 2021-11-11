@@ -1,15 +1,15 @@
-const max = 400;
-var dot = [];
-const dotCount = 50;
-
+const max = 400,
+  dotCount = 50;
+var dot = [],
+  radius = 10,
+  degree = 0;
 
 function setup() {
   createCanvas(max, max);
   background(0);
   colorMode(HSB);
   angleMode(DEGREES);
-  translate(max / 2, max / 2);
-
+  rectMode(CENTER);
 
   for (let i = 0; i <= dotCount; i++) {
     dot.push({
@@ -18,30 +18,45 @@ function setup() {
     })
 
   }
+
 };
 
 function draw() {
   background(0);
 
-  for (let deg = 0; deg <= 360; deg++) {
-    const radius = 50;
-    var x = radius * cos(360 / dotCount * deg);
-    var y = radius * sin(360 / dotCount * deg);
+  var x = radius * cos(degree);
+  var y = radius * sin(degree);
+  degree++;
+
+  if (whatTheRadius() === true) {
+    radius--;
+  } else if (whatTheRadius() === false) {
+    radius++;
   }
+
 
 
   for (let i = 0; i <= dotCount; i++) {
-    console.log(dot[i]);
-    stroke(360, 10, 100 / dotCount * i);
+    stroke(0, 0, 100 / dotCount * i);
     strokeWeight(5);
     point(dot[i].x, dot[i].y)
 
-
-
     beginShape();
     vertex(dot[i].x, dot[i].y);
-    vertex(x, y);
+    vertex(200 + x, 200 + y);
     endShape();
   }
-  // noLoop();
+
+  // fill("black");
+  // circle(200, 200, radius * 2);
+  // circle(200 + x, 200 + y, 10);
 };
+
+
+function whatTheRadius() {
+  if (radius === 200) {
+    return true;
+  } else if (radius === 10) {
+    return false;
+  }
+}
