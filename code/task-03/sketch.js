@@ -48,7 +48,7 @@ function draw() {
     endShape();
   }
 
-  circle(max / 2 + x, max / 2 + y, 5);
+  circle(max / 2 + x, max / 2 + y, 4);
 
 };
 

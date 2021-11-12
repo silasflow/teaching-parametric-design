@@ -7,7 +7,7 @@ var dia = 2;
 function setup() {
   createCanvas(max, max);
   background(0);
-  frameRate(10);
+  frameRate(100);
 };
 
 function draw() {
@@ -29,7 +29,8 @@ function dots() {
     x = 1;
     y++;
   };
-
+  console.log(x);
+  console.log(y);
   // if(x == 400 && y == 400){
   //   break;
   // };
