@@ -1,3 +1,4 @@
+
 const min = 1;
 const max = 400;
 var x = 1;
@@ -25,12 +26,13 @@ function dots() {
   point(x, y);
   if (x <= max) {
     x++;
-  } else if (x === max && y != max) {
+  } 
+  
+  if (x == max && y != max) {
     x = 1;
     y++;
   };
-  console.log(x);
-  console.log(y);
+
   // if(x == 400 && y == 400){
   //   break;
   // };
@@ -42,6 +44,6 @@ function maze() {
   noFill();
   stroke(255);
   arc(mouseX, mouseY, dia, dia, Math.PI / 180 * random(120, 350), Math.PI / 180 * random(120, 350));
-  dia = dia + 5
+  dia = dia + 5;
   // };
 };
