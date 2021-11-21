@@ -1,16 +1,18 @@
 const max = 400;
-var startY = 0,
-  circleSize = 250,
-  startX = -(circleSize / 2),
-  endX = (circleSize / 2),
-  amplitude = 30, //hoehe der Ausschlaege
-  frequence = 30;
+var circleSize = 10,
+  startX = 0,
+  startY = 40,
+  leafWidth = 120,
+  leafHeight = 220,
+  leafStem = 30,
+  stemWidth = 10;
+
 
 
 
 function setup() {
   createCanvas(max, max, SVG);
-  background(200);
+  background(255);
   angleMode(DEGREES);
   noLoop();
 };
@@ -18,35 +20,40 @@ function setup() {
 function draw() {
   translate(max / 2, max / 2);
   noFill();
-  stroke("black");
-  beginShape();
-  for (let i = 93; i <= 447; i++) {
-    vertex(polarX((circleSize / 2), i), polarY((circleSize / 2), i));
-  }
-  vertex(polarX((circleSize / 2), 447), polarY((circleSize / 2), 447) - 40);
-  vertex(polarX((circleSize / 2), 93), polarY((circleSize / 2), 447) - 40);
-  vertex(polarX((circleSize / 2), 93), polarY((circleSize / 2), 93));
-  endShape();
-
-  beginShape();
-  vertex(80, 180);
-  vertex(180, 180);
-  vertex(80, 180);
-  vertex(180, 180);
-  endShape();
 
   stroke("red");
-  beginShape()
-  for (let i = startX; i <= endX; i += 1.4) {
-    curveVertex(polarX((circleSize / 2), i * 3 ),
-      startY + polarY(
-      amplitude * random(),
-      frequence * i)
-    );
+  beginShape();
+  vertex(startX, startY + leafHeight * 0.3);
+  vertex(startX, startY - leafHeight / 1.6);
+  endShape();
+  for (let i = 0; i <= 21; i++) {
+    beginShape();
+    vertex(startX, startY + leafHeight * 0.3 - i * 9);
+    vertex(startX - 80 +i*2, startY + leafHeight * 0.3 - (40 + i * 10));
+    vertex(startX, startY + leafHeight * 0.3 - i * 9);
+    vertex(startX + 80-i*2, startY + leafHeight * 0.3 - (40 + i * 10));
+    endShape();
   }
+
+  stroke("black");
+  beginShape();
+  vertex(startX, startY - leafHeight * 0.6);
+  quadraticVertex(startX + leafWidth / 2, startY - leafHeight * 0.3, startX + leafWidth / 2, startY + 0);
+  quadraticVertex(startX + leafWidth / 2, startY + leafWidth / 2, startX + 5, startY + leafHeight * 0.3);
+  vertex(startX + stemWidth / 2, startY + leafHeight * 0.3 + leafStem);
+  vertex(startX - stemWidth / 2, startY + leafHeight * 0.3 + leafStem);
+  vertex(startX - stemWidth / 2, startY + leafHeight * 0.3);
+  quadraticVertex(startX - leafWidth / 2, startY + leafWidth / 2, startX - leafWidth / 2, startY + 0);
+  quadraticVertex(startX - leafWidth / 2, startY - leafHeight * 0.3, startX + 0, startY - leafHeight * 0.6);
   endShape();
 
-  // save();
+  beginShape();
+  for (let i = 0; i <= 360; i++) {
+    curveVertex(polarX((circleSize / 2), i), polarY((circleSize / 2), i) - 70);
+  };
+  endShape(CLOSE);
+
+  save();
 };
 
 
