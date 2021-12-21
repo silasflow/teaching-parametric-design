@@ -5,7 +5,7 @@ var fireworkRadius = 1; // Radius der einzellene Kugeln
 
 function preload() {
   data = loadJSON('Umsatz_Import_Export.json'); // Daten werden geladen
-
+  font = loadFont('Assistant-ExtraBold.ttf');
 };
 
 function setup() {
@@ -15,40 +15,60 @@ function setup() {
   rectMode(CENTER);
   // noLoop();
 
-  slider = createSlider(6, data.length - 1, 1);
+  slider = createSlider(6, 20, 6, 1);
   slider.position(160, 400);
   slider.style('width', '80px');
+
+  textFont(font);
+  textSize(16);
+  textAlign(CENTER, CENTER);
 };
 
 function draw() {
   translate(max / 2, max / 2);
   data = Object.values(data);
 
+
   let arrayIndex = slider.value(); // überführt den Silder Wert in den Index fürs Array
   let visualisedData = data[arrayIndex][1]; // Tabellen Input der Visualiert wird
 
+  fill(0);
+  text(str(data[arrayIndex][0], 200, 360));
+  console.log('Jahreszahl: ' + data[arrayIndex][0]);
 
   explosion(visualisedData);
 
   // console.log(data);
   console.log('Tabellen Input: ' + visualisedData);
-
+  console.log('Tabellen Länge: ' + data.length);
 };
 
 function explosion(arrayCount) {
-  let segments = arrayCount / 3; // verkleinert die aus der Tabelle gezogenen Zahl
+  let segments = arrayCount / 2; // verkleinert die aus der Tabelle gezogenen Zahl
   let ring = round(segments / 3.33); // Teilt die Zahl in drei Teile, damit am Ende drei nacheinadner startende Ring, die die gesamte Zahl bilden
   let ringDegree = 360 / ring; // errechente die benötigte Grad Zahl zwischen den einzellnen Kugeln
   console.log('Gesamtzahl: ' + ringDegree);
   console.log('Kugeln im Ring: ' + ring);
   console.log('Gradzahl zwischen den Kugeln: ' + ringDegree);
-  noStroke();
 
-  // ---- erzeugt einen RIng uas Kugeln ----
+  noStroke();
+  background(100);
+  // ---- erzeugt einen Ring uas Kugeln ----
   for (let i = 0 + randomStart; i <= 360 + randomStart; i = i + ringDegree) {
+
+    // stroke(90)
+    // strokeWeight(6);
+    // noFill();
+    // circle(0, 0, max / 2);
+    // circle(0, 0, fireworkRadius - 1);
+
+    // ---- Überschreibt die Kugeln weiß ----
     fill(100);
     circle(polarX(max / 4, i), polarY(max / 4, i), 6);
     circle(polarX(fireworkRadius - 1, i), polarY(fireworkRadius - 1, i), 6)
+
+    // ---- zeichent die Kugeln ----
+    noStroke();
     fill(0);
     circle(polarX(fireworkRadius, i), polarY(fireworkRadius, i), 5)
   };
