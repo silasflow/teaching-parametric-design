@@ -52,7 +52,7 @@ function explosion(arrayCount) {
   console.log('Gradzahl zwischen den Kugeln: ' + ringDegree);
 
   noStroke();
-  background(100);
+  // background(100);
   // ---- erzeugt einen Ring uas Kugeln ----
   for (let i = 0 + randomStart; i <= 360 + randomStart; i = i + ringDegree) {
 
