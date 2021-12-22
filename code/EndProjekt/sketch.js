@@ -15,7 +15,8 @@ function setup() {
   rectMode(CENTER);
   // noLoop();
 
-  slider = createSlider(6, 20, 6, 1);
+  data = Object.values(data);
+  slider = createSlider(6, data.length-1, 6, 1);
   slider.position(160, 400);
   slider.style('width', '80px');
 
@@ -26,21 +27,21 @@ function setup() {
 
 function draw() {
   translate(max / 2, max / 2);
-  data = Object.values(data);
+  
 
 
   let arrayIndex = slider.value(); // überführt den Silder Wert in den Index fürs Array
   let visualisedData = data[arrayIndex][1]; // Tabellen Input der Visualiert wird
 
   fill(0);
-  text(str(data[arrayIndex][0], 200, 360));
+  text(str(data[arrayIndex][0]), 200, 360);
   console.log('Jahreszahl: ' + data[arrayIndex][0]);
-
+  console.log('Tabellenlänge: ' + data.length);
   explosion(visualisedData);
 
   // console.log(data);
   console.log('Tabellen Input: ' + visualisedData);
-  console.log('Tabellen Länge: ' + data.length);
+  
 };
 
 function explosion(arrayCount) {
@@ -52,7 +53,7 @@ function explosion(arrayCount) {
   console.log('Gradzahl zwischen den Kugeln: ' + ringDegree);
 
   noStroke();
-  // background(100);
+  background(100);
   // ---- erzeugt einen Ring uas Kugeln ----
   for (let i = 0 + randomStart; i <= 360 + randomStart; i = i + ringDegree) {
 
