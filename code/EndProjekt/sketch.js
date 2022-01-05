@@ -3,13 +3,18 @@ var randomStart = Math.random() * 360,
   random1 = Math.random() * 360,
   random2 = Math.random() * 360,
   random3 = Math.random() * 360; // ändert den Startpunkt der Kugeln um mehr Abwechselung zu bieten
-let slider;
+let slider,
+  sliderSpeed;
 var fireworkRadius = 0; // Radius der einzellene Kugeln
 var gravity = 0;
 var j = 1;
 var data;
 var arrayIndex;
 var alpha = 1;
+
+var rocketX = -100,
+  rocketY = 240;
+
 
 function preload() {
   data = loadJSON('Umsatz_Import_Export.json'); // Daten werden geladen
@@ -22,6 +27,7 @@ function setup() {
   angleMode(DEGREES);
   rectMode(CENTER);
   frameRate(60);
+  background(208, 75, 18);
 
   // noLoop();
 
@@ -30,9 +36,9 @@ function setup() {
   slider.position(160, 400);
   slider.style('width', '80px');
 
-  sliderSpeed = createSlider(0, 1, 0.25, 0.01);
-  sliderSpeed.position(160, 420);
-  sliderSpeed.style('width', '80px');
+  // sliderSpeed = createSlider(0, 1, 0.3, 0.01);
+  // sliderSpeed.position(160, 420);
+  // sliderSpeed.style('width', '80px');
 
   textFont(font);
   textSize(16);
@@ -41,7 +47,7 @@ function setup() {
 };
 
 function draw() {
-  translate(max / 2, max / 2);
+  translate(max / 2, max / 2.5);
 
 
   arrayIndex = slider.value(); // überführt den Silder Wert in den Index fürs Array
@@ -49,19 +55,18 @@ function draw() {
 
   fill(0);
   text(str(data[arrayIndex][0]), 200, 420);
+  text('hallo', 200, 500);
   console.log('Jahreszahl: ' + data[arrayIndex][0]);
   console.log('Tabellenlänge: ' + data.length);
 
-  background(0);
+  background(208, 75, 18, 0.1);
+
+
   for (let i = 0; i < 3; i++) {
     explosion();
     console.log('j: ' + j);
   }
 
-  // for (j = 1; j <= 3; j++) {
-  //   let visualisedData = data[arrayIndex][j];
-
-  // };
 
   // console.log(data);
   console.log('Tabellen Input: ' + visualisedData);
@@ -71,24 +76,34 @@ function draw() {
 
 function explosion() {
   let segments;
-  let hue;
-  let offset;
+  let hue,
+    saturation,
+    brightness;
+  let eachColorOffset;
+  let yOffset = 0;
+
 
   console.log(data);
   if (j === 1) {
     hue = 148;
+    saturation = 90;
+    brightness = 79;
     segments = data[arrayIndex][j] / 2;
-    offset = 5;
+    eachColorOffset = 5;
     randomStart = random1;
   } else if (j === 2) {
     hue = 60;
+    saturation = 90;
+    brightness = 84;
     segments = data[arrayIndex][j] / 2300;
-    offset = 0;
+    eachColorOffset = 0;
     randomStart = random2;
   } else if (j === 3) {
     hue = 32;
+    saturation = 85;
+    brightness = 92;
     segments = data[arrayIndex][j] / 90;
-    offset = 10;
+    eachColorOffset = 10;
     randomStart = random3;
   };
 
@@ -99,28 +114,38 @@ function explosion() {
   console.log('Kugeln im Ring: ' + ring);
   console.log('Gradzahl zwischen den Kugeln: ' + ringDegree);
 
+  let ballRadius = noise(fireworkRadius / 20) * 5 + 1;
+  let ringOffset = [
+    5,
+    20,
+    4
+  ];
+  let wiggle = random(-1, 1);
 
 
   noStroke();
-  fill(hue, 100, 100, alpha);
+  fill(hue, saturation, brightness, alpha);
 
 
   // ---- erzeugt einen Ring aus Kugeln ----
-  if (fireworkRadius + 10 - offset <= 80) {
+  if (fireworkRadius - eachColorOffset <= 80) {
+    yOffset = fireworkRadius / ringOffset[2] * 3;
     for (let i = 0 + random1; i <= 360 + random1; i = i + ringDegree) {
-      circle(polarX(fireworkRadius + offset, i), polarY(fireworkRadius + offset, i) + gravity, 5)
+      circle(polarX(fireworkRadius + eachColorOffset, i) + wiggle, polarY(fireworkRadius + eachColorOffset, i) + yOffset, ballRadius)
     };
   }
 
-  if (fireworkRadius - 20 - offset >= 0 && fireworkRadius <= 100) {
+  if (fireworkRadius - ringOffset[0] - eachColorOffset >= 0 && fireworkRadius <= 100) {
+    yOffset = (fireworkRadius - ringOffset[0]) / ringOffset[2] * 2;
     for (let i = 0 + random2; i <= 360 + random2; i = i + ringDegree) {
-      circle(polarX(fireworkRadius - 20 - offset, i), polarY(fireworkRadius - 20 - offset, i) + gravity, 5)
+      circle(polarX(fireworkRadius - ringOffset[0] - eachColorOffset, i) + wiggle, polarY(fireworkRadius - ringOffset[0] - eachColorOffset, i) + yOffset, ballRadius)
     };
   }
 
-  if (fireworkRadius - 40 - offset >= 0) {
+  if (fireworkRadius - ringOffset[1] - eachColorOffset >= 0) {
+    yOffset = (fireworkRadius - ringOffset[1]) / ringOffset[2] * 2;
     for (let i = 0 + random3; i <= 360 + random3; i = i + ringDegree) {
-      circle(polarX(fireworkRadius - 40 - offset, i), polarY(fireworkRadius - 40 - offset, i) + gravity, 5)
+      circle(polarX(fireworkRadius - ringOffset[1] - eachColorOffset, i) + wiggle, polarY(fireworkRadius - ringOffset[1] - eachColorOffset, i) + yOffset, ballRadius)
     };
   }
 
@@ -133,16 +158,16 @@ function explosion() {
   // ---- testet auf maximal Radius des Ringes -----
   if (whatTheRadius(fireworkRadius) === 1) {
     fireworkRadius = 0;
-    gravity = 0;
     alpha = 1;
     // randomStart = Math.random() * 360;
     random1 = Math.random() * 360;
     random2 = Math.random() * 360;
     random3 = Math.random() * 360;
+
   } else if (whatTheRadius(fireworkRadius) === 0) {
-    fireworkRadius += sliderSpeed.value();
-    // gravity += 0.1;
-    alpha -= 0.002;
+    // fireworkRadius += sliderSpeed.value();
+    fireworkRadius += 0.3;
+    alpha = noise(fireworkRadius) + 0.2;
   }
 };
 
