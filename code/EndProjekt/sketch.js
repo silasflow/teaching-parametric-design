@@ -119,7 +119,7 @@ function explosion() {
   let ringOffset = [
     5,
     20,
-    4
+    7
   ];
   let wiggle = noise(fireworkRadius)*2-1;
   // let wiggle = random(-2,2);
