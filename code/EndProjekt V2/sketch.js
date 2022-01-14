@@ -14,7 +14,7 @@ function setup() {
   colorMode(HSB);
   angleMode(DEGREES);
   rectMode(CENTER);
-  frameRate(10);
+  frameRate(30);
   // noLoop();
 
   data = Object.values(data);

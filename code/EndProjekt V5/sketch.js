@@ -58,11 +58,14 @@ function draw() {
 
   arrayIndex = slider.value(); // überführt den Silder Wert in den Index fürs Array
 
+  push();
+  translate(-window.innerWidth / 2, -window.innerHeight / 3.5);
+
   fill(40);
   textSize(20);
   textAlign(CENTER, CENTER);
-  text(str(data[arrayIndex][0]), 0, window.innerHeight * 0.35);
-
+  text(str(data[arrayIndex][0]), window.innerWidth/2 , window.innerHeight * 0.7- 40);
+  pop();
   legend();
 
 
@@ -74,7 +77,7 @@ function draw() {
 
   for (let i = 0; i < 3; i++) {
     explosion();
-    console.log('j: ' + j);
+    // console.log('j: ' + j);
   }
 
 
@@ -208,7 +211,6 @@ function legend() {
 
   if (window.innerWidth <= 1020) {
 
-    let legendX = -window.innerWidth * 0.13;
     let legendY = window.innerHeight * 0.5;
     textSize(16);
     textAlign(LEFT, CENTER);
@@ -227,32 +229,13 @@ function legend() {
     fill(40);
     text('Umsatz', -10, legendY + 60);
 
-  } else if (window.innerWidth <= 501) {
-
-    let legendX = -window.innerWidth * 0.45;
-    let legendY = window.innerHeight * 0.45;
-    textSize(16);
-    textAlign(LEFT, CENTER);
-    fill(60, 90, 84)
-    circle(legendX, legendY + 2.5, 20);
-    fill(40);
-    text('Import', legendX + 20, legendY);
-
-    fill(32, 85, 92)
-    circle(legendX + 100, legendY + 2.5, 20);
-    fill(40);
-    text('Export', legendX + 120, legendY);
-
-    fill(148, 90, 79)
-    circle(legendX + 200, legendY + 2.5, 20);
-    fill(40);
-    text('Umsatz', legendX + 220, legendY);
-
-
   } else {
 
-    let legendX = -window.innerWidth * 0.45;
-    let legendY = window.innerHeight * 0.35;
+    push();
+    translate(-window.innerWidth / 2, -window.innerHeight / 3.5);
+
+    let legendX = window.innerWidth * 0.05;
+    let legendY = window.innerHeight * 0.7;
     textSize(16);
     textAlign(LEFT, CENTER);
     fill(60, 90, 84)
@@ -269,6 +252,6 @@ function legend() {
     circle(legendX + 200, legendY + 2.5, 20);
     fill(40);
     text('Umsatz', legendX + 220, legendY);
-
+    pop();
   }
 }
